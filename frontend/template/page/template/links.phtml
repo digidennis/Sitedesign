@@ -1,0 +1,18 @@
+
+<?php
+/**
+ * @see Mage_Page_Block_Template_Links
+ */
+?>
+<?php $_links = $this->getLinks(); ?>
+<?php if(count($_links)>0): ?>
+    <?php foreach($_links as $_link): ?>
+        <?php if ($_link instanceof Mage_Core_Block_Abstract):?>
+            <?php echo $_link->toHtml() ?>
+        <?php else: ?>
+            <li class="<?php if($_link->getIsLast()): ?> last<?php endif; ?>" <?php echo $_link->getLiParams() ?>>
+                <?php echo $_link->getBeforeText() ?><a href="<?php echo $_link->getUrl() ?>" title="<?php echo $_link->getTitle() ?>" <?php echo $_link->getAParams() ?>><?php if( $_link->getLabel() === 'Konto'): ?><i class="glyphicon glyphicon-user"></i><?php elseif( $_link->getLabel() === 'Log af'): ?><i class="glyphicon glyphicon-off"></i><?php elseif( mb_substr( $_link->getLabel(), 0, 11 ) === 'Indkøbskurv'): ?><i class="glyphicon glyphicon-shopping-cart"></i><?php endif; ?><?php echo $_link->getLabel() ?></a><?php echo $_link->getAfterText() ?>
+            </li>
+        <?php endif;?>
+    <?php endforeach; ?>
+<?php endif; ?>

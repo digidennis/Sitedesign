@@ -1,0 +1,29 @@
+
+<?php  $_order = $this->getOrder() ?>
+<table class="table table-striped" id="my-orders-table" summary="<?php echo $this->__('Items Ordered') ?>">
+    <col />
+    <col class="hidden-xs" width="1" />
+    <col width="1" />
+    <col width="1" />
+    <thead>
+    <tr>
+        <th><?php echo $this->__('Product Name') ?></th>
+        <th class="a-right hidden-xs"><?php echo $this->__('Price') ?></th>
+        <th class="a-right"><?php echo $this->__('Qty') ?></th>
+        <th class="a-right"><?php echo $this->__('Subtotal') ?></th>
+    </tr>
+    </thead>
+    <?php $_items = $_order->getItemsCollection(); ?>
+    <?php $_index = 0; ?>
+    <?php $_count = $_items->count(); ?>
+    <?php foreach ($_items as $_item): ?>
+        <?php if ($_item->getParentItem()) continue; ?>
+        <?php echo $this->getItemHtml($_item) ?>
+    <?php endforeach; ?>
+</table>
+<table class="table table-hover">
+    <tbody>
+    <?php echo $this->getChildHtml('order_totals') ?>
+    </tbody>
+</table>
+<!--script type="text/javascript">decorateTable('my-orders-table', {'tbody' : ['odd', 'even'], 'tbody tr' : ['first', 'last']})</script-->

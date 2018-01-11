@@ -1,0 +1,8 @@
+<config>
+    <modules>
+        <Digidennis_Sitedesign>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Digidennis_Sitedesign>
+    </modules>
+</config>

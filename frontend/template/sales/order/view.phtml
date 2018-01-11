@@ -1,0 +1,57 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+<?php $_order = $this->getOrder() ?>
+
+<?php if ($_order->getTracksCollection()->count()) : ?>
+    <a href="#"
+       class="btn btn-default"
+       onclick="popWin('<?php echo $this->helper('shipping')->getTrackingPopupUrlBySalesModel($_order) ?>','trackorder','top=10px,left=60px,width=450,height=300,resizable=yes,scrollbars=yes'); return false;"
+       title="<?php echo $this->__('Track your order') ?>"><span class="glyphicon glyphicon-send"></span><?php echo $this->__('Track your order') ?></a>
+<?php endif; ?>
+
+<div class="row">
+    <div class="col-md-12">
+        <?php echo $this->getChildHtml('order_items') ?>
+    </div>
+    <?php $_history = $this->getOrder()->getVisibleStatusHistory() ?>
+    <?php if (count($_history)): ?>
+        <div class="col-sm-12">
+            <h4><?php echo $this->__('About Your Order') ?></h4>
+            <dl class="order-about well">
+                <?php foreach ($_history as $_historyItem): ?>
+                    <dt><?php echo $this->formatDate($_historyItem->getCreatedAtStoreDate(), 'medium', true) ?></dt>
+                    <dd><?php echo $this->escapeHtml($_historyItem->getComment()) ?></dd>
+                <?php endforeach; ?>
+            </dl>
+        </div>
+    <?php endif; ?>
+</div>
+
+<div class="buttons-set">
+    <a class="btn btn-default" href="<?php echo $this->getBackUrl() ?>"><small>&laquo; </small><?php echo $this->getBackTitle() ?></a>
+</div>

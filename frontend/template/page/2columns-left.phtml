@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="<?php echo $this->getLang() ?>"
+      lang="<?php echo $this->getLang() ?>">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <?php echo $this->getChildHtml('head') ?>
+</head>
+
+<body<?php echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?>>
+<?php echo $this->getChildHtml('after_body_start') ?>
+
+<div class="wrapper">
+    <div class="page">
+
+        <?php echo $this->getChildHtml('global_notices') ?>
+        <?php echo $this->getChildHtml('header') ?>
+
+        <section>
+            <div class="content">
+                <div class="container">
+                    <?php $pageTitle = $this->_children['head']->getTitle() ?>
+                    <?php if( $pageTitle <> '' ): ?>
+                        <!--div class="page-title">
+                            <h1><?php echo $this->__($pageTitle) ?></h1>
+                        </div-->
+                    <?php endif ?>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <?php echo $this->getChildHtml('global_messages') ?>
+                            <?php echo $this->getChildHtml('content') ?>
+                        </div>
+                        <div class="col-sm-4">
+                            <?php echo $this->getChildHtml('right') ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <?php echo $this->getChildHtml('footer') ?>
+        <?php echo $this->getChildHtml('before_body_end') ?>
+
+    </div>
+</div>
+
+<?php echo $this->getAbsoluteFooter() ?>
+<?php echo $this->getChildHtml('jquery_bootstrap_pre') ?>
+<?php echo $this->getChildHtml('jquery_bootstrap_post') ?>
+</body>
+</html>

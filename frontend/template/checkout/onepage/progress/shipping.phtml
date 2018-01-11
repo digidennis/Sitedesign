@@ -1,0 +1,10 @@
+
+<?php if ($this->getCheckout()->getStepData('shipping', 'complete')): ?>
+<?php $completeClass = $this->getCheckout()->getStepData('shipping', 'complete') ? 'complete' : ''; ?>
+<div class="<?php echo $completeClass ?>">
+    <a href="#payment" onclick="checkout.changeSection('opc-shipping');return false;"><span class="proc-num">2.</span><?php echo $this->__('Shipping Address') ?> </a>
+</div>
+<?php else: ?>
+<div><span class="proc-num">2.</span> <?php echo $this->__('Shipping Address') ?></div>
+<?php endif; ?>
+

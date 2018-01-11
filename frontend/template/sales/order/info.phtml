@@ -1,0 +1,59 @@
+<?php /** @var $this Mage_Sales_Block_Order_Info */ ?>
+<?php $_order = $this->getOrder() ?>
+<?php $_links = $this->getLinks(); ?>
+
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<?php echo $this->getStatusHistoryRssUrl($_order) ?>
+
+
+
+<ul class="order-info-head">
+    <li><strong>Ordrenummer: </strong><?php echo $_order->getRealOrderId() ?></strong></li>
+    <li><strong>Ordredato: </strong><?php echo '' . $this->formatDate($_order->getCreatedAtStoreDate(), 'long') ?></li>
+    <li><strong>Status: </strong><span class="text-primary"><?php echo $_order->getStatusLabel() ?></span></p></li>
+</ul>
+
+<div class="btn-group">
+    <?php foreach ($_links as $_link): ?>
+        <?php if($_link->getUrl()): ?>
+            <a class="btn btn-default" href="<?php echo $_link->getUrl() ?>"><?php echo $_link->getLabel() ?></a>
+        <?php else: ?>
+            <a class="btn btn-default active" href="#"><?php echo $_link->getLabel() ?></a>
+        <?php endif; ?>
+    <?php endforeach; ?>
+    <?php echo $this->getChildHtml('buttons') ?>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 visible-xs-block">
+        <hr />
+    </div>
+    <div class="col-sm-3 col-xs-6">
+        <b><?php echo $this->__('Shipping Address') ?></b>
+        <address><?php echo $_order->getShippingAddress()->format('html') ?></address>
+    </div>
+    <div class="col-sm-3 col-xs-6">
+        <b><?php echo $this->__('Billing Address') ?></b>
+        <address><?php echo $_order->getBillingAddress()->format('html') ?></address>
+    </div>
+    <div class="col-sm-3 col-xs-6">
+        <b><?php echo $this->__('Payment Method') ?></b>
+        <?php echo $this->getPaymentInfoHtml() ?>
+    </div>
+    <div class="col-sm-3 col-xs-6">
+        <b><?php echo $this->__('Shipping Method') ?></b>
+        <?php if ($_order->getShippingDescription()): ?>
+            <p><?php echo $this->escapeHtml($_order->getShippingDescription()) ?></p>
+        <?php else: ?>
+            <p><?php echo $this->helper('sales')->__('No shipping information available'); ?></p>
+        <?php endif; ?>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-xs-12 visible-xs-block">
+        <hr />
+    </div>
+</div>

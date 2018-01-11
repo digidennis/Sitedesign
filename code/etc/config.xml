@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<config>
+
+    <modules>
+        <Digidennis_Sitedesign>
+            <version>0.1.0</version>
+        </Digidennis_Sitedesign>
+    </modules>
+
+    <global>
+        <blocks>
+            <digidennis_sitedesign>
+                <class>Digidennis_Sitedesign_Block</class>
+            </digidennis_sitedesign>
+            <checkout>
+                <rewrite>
+                    <onepage_billing>Digidennis_Sitedesign_Block_Onepage_Billing</onepage_billing>
+                    <onepage_shipping>Digidennis_Sitedesign_Block_Onepage_Shipping</onepage_shipping>
+                </rewrite>
+            </checkout>
+            <customer>
+                <rewrite>
+                    <address_edit>Digidennis_Sitedesign_Block_Address_Edit</address_edit>
+                    <account_navigation>Digidennis_Sitedesign_Block_Account_Navigation</account_navigation>
+                </rewrite>
+            </customer>
+        </blocks>
+        <helpers>
+            <digidennis_sitedesign>
+                <class>Digidennis_Sitedesign_Helper</class>
+            </digidennis_sitedesign>
+        </helpers>
+        <models>
+            <digidennis_sitedesign>
+                <class>Digidennis_Sitedesign_Model</class>
+            </digidennis_sitedesign>
+            <sales>
+                <rewrite>
+                    <order_pdf_invoice>Digidennis_Sitedesign_Model_Order_Pdf_Invoice</order_pdf_invoice>
+                </rewrite>
+            </sales>
+        </models>
+    </global>
+    <crontab>
+        <jobs>
+            <sitedesign_refresh_cache>
+                <schedule>
+                    <cron_expr>* * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>digidennis_sitedesign/observer::refreshbycronCache</model>
+                </run>
+            </sitedesign_refresh_cache>
+        </jobs>
+    </crontab>
+</config>

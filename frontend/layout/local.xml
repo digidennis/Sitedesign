@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<layout version="0.1.0">
+    <default>
+        <remove name="left.permanent.callout" />
+        <remove name="right.permanent.callout" />
+        <reference name="root">
+            <remove name="breadcrumbs" />
+        </reference>
+        <reference name="head">
+            <action method="addLinkRel"><rel>stylesheet</rel><href><![CDATA[https://fonts.googleapis.com/css?family=Hind:300i,400,400i,600,700]]></href></action>
+        </reference>
+        <reference name="header">
+            <remove name="store_language" />
+            <remove name="top.container"/>
+            <remove name="welcome" />
+        </reference>
+        <reference name="top.links">
+            <remove name="wishlist_link" />
+            <remove name="checkout_cart_link" />
+            <block type="checkout/links" name="my_checkout_cart_link">
+                <action method="addCartLink"></action>
+            </block>
+        </reference>
+        <!-- Mage_Checkout -->
+        <reference name="footer">
+            <remove name="store_switcher" />
+        </reference>
+        <reference name="footer_links">
+            <action method="setTemplate">
+                <template>page/template/footerlinks.phtml</template>
+            </action>
+            <remove name="return_link" />
+            <action method="removeLinkByUrl"><url helper="catalog/map/getCategoryUrl"/></action>
+            <action method="removeLinkByUrl"><url helper="catalogsearch/getSearchTermUrl"/></action>
+            <action method="removeLinkByUrl"><url helper="catalogsearch/getAdvancedSearchUrl"/></action>
+        </reference>
+    </default>
+
+    <customer_logged_out>
+        <reference name="top.links">
+            <action method="removeLinkByUrl"><url helper="customer/getLoginUrl"/></action>
+        </reference>
+    </customer_logged_out>
+
+    <customer_account_index>
+        <remove name="left"/>
+        <remove name="right"/>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/1column-contained.phtml</template>
+            </action>
+        </reference>
+    </customer_account_index>
+
+    <checkout_onepage_index>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/1column-contained.phtml</template>
+            </action>
+        </reference>
+        <reference name="right">
+            <action method="unsetChildren"></action>
+        </reference>
+        <reference name="content">
+            <block type="page/html_wrapper" name="checkout.progress.wrapper" translate="label" before="checkout.onepage">
+                <label>Checkout Progress Wrapper</label>
+                <action method="setElementId"><value>checkout-progress-wrapper</value></action>
+                <block type="checkout/onepage_progress" name="checkout.progress" before="-" template="checkout/onepage/progress.phtml">
+                    <block type="checkout/onepage_progress" name="billing.progress" template="checkout/onepage/progress/billing.phtml"></block>
+                    <block type="checkout/onepage_progress" name="shipping.progress" template="checkout/onepage/progress/shipping.phtml"></block>
+                    <block type="checkout/onepage_progress" name="shippingmethod.progress" template="checkout/onepage/progress/shipping_method.phtml"></block>
+                    <block type="checkout/onepage_progress" name="payment.progress" template="checkout/onepage/progress/payment.phtml"></block>
+                </block>
+            </block>
+        </reference>
+    </checkout_onepage_index>
+
+    <checkout_onepage_success>
+        <reference name="root">
+            <action method="setTemplate">
+                <template>page/1column-contained-success.phtml</template>
+            </action>
+        </reference>
+        <reference name="right">
+            <action method="unsetChildren"></action>
+        </reference>
+    </checkout_onepage_success>
+
+    <customer_account_edit>
+        <remove name="left"/>
+        <remove name="right"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column-contained.phtml</template></action>
+        </reference>
+    </customer_account_edit>
+
+    <customer_address_index>
+        <remove name="left"/>
+        <remove name="right"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column-contained.phtml</template></action>
+        </reference>
+    </customer_address_index>
+
+    <customer_address_form>
+        <remove name="left"/>
+        <remove name="right"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column-contained.phtml</template></action>
+        </reference>
+    </customer_address_form>
+
+    <customer_account_forgotpassword>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column-contained.phtml</template></action>
+        </reference>
+    </customer_account_forgotpassword>
+
+    <customer_account_changeforgotten>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column-contained.phtml</template></action>
+        </reference>
+    </customer_account_changeforgotten>
+
+    <customer_account_logoutsuccess>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column-contained.phtml</template></action>
+        </reference>
+    </customer_account_logoutsuccess>
+
+    <sales_order_view>
+        <remove name="left"/>
+        <remove name="right"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column-contained.phtml</template></action>
+        </reference>
+    </sales_order_view>
+
+    <sales_order_history>
+        <remove name="left"/>
+        <remove name="right"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column-contained.phtml</template></action>
+        </reference>
+    </sales_order_history>
+
+    <sales_order_shipment>
+        <remove name="left"/>
+        <remove name="right"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column-contained.phtml</template></action>
+        </reference>
+    </sales_order_shipment>
+
+    <sales_order_invoice>
+        <remove name="left"/>
+        <remove name="right"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column-contained.phtml</template></action>
+        </reference>
+    </sales_order_invoice>
+
+    <sales_order_creditmemo>
+        <remove name="left"/>
+        <remove name="right"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column-contained.phtml</template></action>
+        </reference>
+    </sales_order_creditmemo>
+
+    <sales_order_print>
+        <reference name="head">
+            <action method="removeItem"><type>skin_css</type><name>css/styles.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>digidennis/jquerybootstrap/bootstrap.min.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>css/styles.css</name></action>
+        </reference>
+        <reference name="sales.order.print">
+            <block type="sales/order_totals" name="order_totals" template="sales/order/totals.phtml">
+                <action method="setLabelProperties"><value>colspan="3" class="a-right"</value></action>
+            </block>
+        </reference>
+    </sales_order_print>
+
+    <sales_order_printinvoice>
+        <reference name="head">
+            <action method="removeItem"><type>skin_css</type><name>css/styles.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>digidennis/jquerybootstrap/bootstrap.min.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>css/styles.css</name></action>
+        </reference>
+    </sales_order_printinvoice>
+
+    <sales_order_printcreditmemo>
+        <reference name="head">
+            <action method="removeItem"><type>skin_css</type><name>css/styles.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>digidennis/jquerybootstrap/bootstrap.min.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>css/styles.css</name></action>
+        </reference>
+    </sales_order_printcreditmemo>
+
+    <sales_order_printshipment>
+        <reference name="head">
+            <action method="removeItem"><type>skin_css</type><name>css/styles.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>digidennis/jquerybootstrap/bootstrap.min.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>css/styles.css</name></action>
+        </reference>
+    </sales_order_printshipment>
+
+</layout>

@@ -1,0 +1,93 @@
+
+
+
+<div class="form-content-body">
+
+    <div class="page-title">
+        <h1><?php echo Mage::helper('contacts')->__('Contact Us') ?></h1>
+    </div>
+
+    <form action="<?php echo $this->getFormAction(); ?>" id="contactForm" method="post">
+        <fieldset>
+
+            <address>
+                <b>ComforMadras ApS</b><br>
+                Ringbakken 14, ganløse<br>
+                3660 Stenløse<br>
+                cvr: 31 86 37 32<br><br>
+                <span class="glyphicon glyphicon-earphone"></span>71 99 70 90 (hverdage kl. 11-15)<br>
+                <span class="glyphicon glyphicon-envelope"></span><a href="mailto:info@comfortmadras.dk">info@comfortmadras.dk</a><br>
+            </address>
+
+            <h2>Har du et spørgsmål?</h2>
+
+            <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="name" class="required control-label"><?php echo Mage::helper('contacts')->__('Name') ?></label>
+                        <input name="name"
+                               id="name"
+                               title="<?php echo Mage::helper('contacts')->__('Name') ?>"
+                               placeholder="<?php echo Mage::helper('contacts')->__('Name') ?>, påkrævet"
+                               value="<?php echo $this->escapeHtml($this->helper('contacts')->getUserName()) ?>"
+                               class="input-text form-control required-entry"
+                               type="text" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="email" class="required control-label"><?php echo Mage::helper('contacts')->__('Email') ?></label>
+                        <input name="email"
+                               id="email"
+                               title="<?php echo Mage::helper('contacts')->__('Email') ?>"
+                               placeholder="<?php echo Mage::helper('contacts')->__('Email') ?>, påkrævet"
+                               value="<?php echo $this->escapeHtml($this->helper('contacts')->getUserEmail()) ?>"
+                               class="input-text required-entry validate-email form-control"
+                               type="text" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="telephone"><?php echo Mage::helper('contacts')->__('Telephone') ?></label>
+                <input name="telephone"
+                       id="telephone"
+                       title="<?php echo Mage::helper('contacts')->__('Telephone') ?>"
+                       placeholder="<?php echo Mage::helper('contacts')->__('Telephone') ?>"
+                       value=""
+                       class="input-text form-control"
+                       type="text" />
+            </div>
+
+
+
+            <div class="form-group">
+                <label for="comment" class="required control-label">Besked</label>
+                <textarea name="comment"
+                          id="comment"
+                          title="Besked"
+                          placeholder="Besked, påkrævet "
+                          class="required-entry input-text form-control"
+                          cols="5"
+                          rows="3"></textarea>
+            </div>
+
+            <div class="buttons-set">
+                <input type="text" name="hideit" id="hideit" value="" style="display:none !important;" />
+                <button type="submit"
+                        title="Send"
+                        class="btn btn-default">Send</button>
+            </div>
+
+        </fieldset>
+
+    </form>
+
+</div>
+<script type="text/javascript">
+    //<![CDATA[
+    var contactForm = new VarienForm('contactForm', true);
+    //]]>
+</script>

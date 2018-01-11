@@ -1,0 +1,33 @@
+
+
+<div class="panel panel-default  panel-addresses">
+    <div class="panel-heading">
+        <a href="<?php echo $this->getAddressBookUrl() ?>"
+            title="<?php echo $this->__('Edit') ?> <?php echo $this->__('Address Book') ?>">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <?php echo $this->__('Address Book') ?>
+        </a>
+    </div>
+    <div class="panel-body row">
+        <div class="col-sm-6">
+            <address>
+                <?php echo $this->getPrimaryBillingAddressHtml() ?><br /><br />
+                <a href="<?php echo $this->getPrimaryBillingAddressEditUrl() ?>"
+                                                                            title="<?php echo $this->__('Edit') . ' ' . $this->__('Default Billing Address') ?>">
+                    <?php echo $this->__('Edit') . ' ' . $this->__('Default Billing Address') ?>
+                </a>
+            </address>
+
+        </div>
+        <div class="col-sm-6 ">
+            <address>
+                <?php echo $this->getPrimaryShippingAddressHtml() ?><br /><br />
+                <a title="<?php echo $this->__('Edit') . ' ' . $this->__('Default Shipping Address') ?>"
+                   href="<?php echo $this->getPrimaryShippingAddressEditUrl() ?>">
+                    <?php echo $this->__('Edit') . ' ' . $this->__('Default Shipping Address') ?>
+                </a>
+            </address>
+        </div>
+    </div>
+</div>
+
