@@ -29,7 +29,7 @@
                             <?php endif; ?>
 
                             <?php endif; ?>
-                                <label for="s_method_<?php echo $_rate->getCode() ?>"><?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
+                                <label for="s_method_<?php echo $_rate->getCode() ?>"><?php echo $this->escapeHtml($_rate->getCode()) ?>
                                     <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
                                     <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
                                     <?php echo $_excl; ?>
