@@ -76,6 +76,14 @@
         </reference>
     </checkout_onepage_index>
 
+    <quickpaypayment_payment_linksuccess>
+        <remove name="left"/>
+        <remove name="right"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column-contained.phtml</template></action>
+        </reference>
+    </quickpaypayment_payment_linksuccess>
+
     <checkout_onepage_success>
         <reference name="root">
             <action method="setTemplate">
