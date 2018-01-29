@@ -39,6 +39,11 @@
                     <order_pdf_invoice>Digidennis_Sitedesign_Model_Order_Pdf_Invoice</order_pdf_invoice>
                 </rewrite>
             </sales>
+            <adminhtml>
+                <rewrite>
+                    <sales_order_create>Digidennis_Sitedesign_Model_Order_Create</sales_order_create>
+                </rewrite>
+            </adminhtml>
         </models>
     </global>
     <crontab>
