@@ -206,4 +206,12 @@
         </reference>
     </sales_order_printshipment>
 
+    <quickpay_payment_linksuccess>
+        <remove name="left"/>
+        <remove name="right"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column-contained.phtml</template></action>
+        </reference>
+    </quickpay_payment_linksuccess>
+
 </layout>
