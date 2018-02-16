@@ -2,3 +2,5 @@ code                                app/code/local/Digidennis/Sitedesign/
 frontend/*                          app/design/frontend/kbhskum/default/
 skin_frontend/*                     skin/frontend/kbhskum/default/
 Digidennis_Sitedesign.xml           app/etc/modules/Digidennis_Sitedesign.xml
+translations/da_DK/Digidennis_Sitedesign.csv  app/locale/da_DK/Digidennis_Sitedesign.csv
+libfonts/*                          lib/sitedesignfonts/
