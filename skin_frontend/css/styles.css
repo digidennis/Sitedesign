@@ -271,21 +271,24 @@ div.validation-advice {
 ****/
 ul.messages {
     list-style: none;
-    margin: 0 0 1em;
+    margin: 0;
     padding: 0;
+    text-align: center;
 }
 li.error-msg {
     color: #e84545;
     font-size: 1.1em;
+    background-color: antiquewhite;
 }
 li.success-msg{
-    color: #6de675;
+    color: #248e43;
+    background-color: #e5fde6;
     font-size: 1.1em;
 }
 ul.messages > li ul {
     margin:0;
     list-style:none;
-    padding: 0;
+    padding: 10px;
 }
 .my-account .welcome-msg{
     margin-bottom: 1.5em;
