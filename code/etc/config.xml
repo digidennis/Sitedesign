@@ -49,6 +49,17 @@
             </adminhtml>
         </models>
     </global>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Digidennis_Sitedesign>
+                    <files>
+                        <default>Digidennis_Sitedesign.csv</default>
+                    </files>
+                </Digidennis_Sitedesign>
+            </modules>
+        </translate>
+    </adminhtml>
     <crontab>
         <jobs>
             <sitedesign_refresh_cache>

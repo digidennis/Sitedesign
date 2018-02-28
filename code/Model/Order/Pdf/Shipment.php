@@ -56,6 +56,7 @@ class Digidennis_Sitedesign_Model_Order_Pdf_Shipment extends Digidennis_Sitedesi
             }
             $page  = $this->newPage();
             $order = $shipment->getOrder();
+            $shipmentstartpage = count($this->_getPdf()->pages);
 
             //modtager
             $shippingAddress = $this->_formatAddress($order->getShippingAddress()->format('pdf'));
@@ -116,12 +117,13 @@ class Digidennis_Sitedesign_Model_Order_Pdf_Shipment extends Digidennis_Sitedesi
 
             }
             
-            //on all pages this info
-            $pagecount = count($this->_getPdf()->pages);
-            $numpage = 1;
-            foreach ($this->_getPdf()->pages as $collectedpage )
-            {
-                //metode
+            //on all pages of this shipment this info
+            $shipmentendpage = count($this->_getPdf()->pages);
+
+            for( $numpage = 0; $numpage + $shipmentstartpage <= $shipmentendpage; $numpage++){
+                $collectedpage = $this->_getPdf()->pages[$numpage];
+
+                //CARRIER METHOD
                 $this->y = 700;
                 $this->_setFontRegular($page, 9);
                 $shippingMethod  = $order->getShippingDescription();
@@ -130,7 +132,6 @@ class Digidennis_Sitedesign_Model_Order_Pdf_Shipment extends Digidennis_Sitedesi
                     $this->y -= 14;
                 }
                 if(floatval($order->getShippingAmount()) > 0 ){
-
                     $totalShippingChargesText = "(" . Mage::helper('sales')->__('Beløb') . " "
                         . $order->formatPriceTxt($order->getShippingAmount()) . ")";
                     $collectedpage->drawText($totalShippingChargesText, $this->_rightstop, $this->y, 'UTF-8');
@@ -140,12 +141,12 @@ class Digidennis_Sitedesign_Model_Order_Pdf_Shipment extends Digidennis_Sitedesi
                 $collectedpage->setFillColor(new Zend_Pdf_Color_GrayScale(0));
                 $this->_setFontBold($collectedpage, 18);
                 $collectedpage->drawText("Til Levering", $this->_leftstop, $this->y = 614, 'UTF-8');
+
                 //Ordrenr, dato, ordrenr
                 $this->_setFontRegular($collectedpage, 9);
                 $collectedpage->drawText('Ordre: ' . $order->getIncrementId(), $this->_rightstop, $this->y+24, 'UTF-8');
                 $collectedpage->drawText('Ordredato: '  . Mage::helper('core')->formatDate($shipment->getCreatedAt(), 'long', false), $this->_rightstop, $this->y+12, 'UTF-8');
-                $collectedpage->drawText('Side ' . $numpage . ' af ' . $pagecount, $this->_rightstop, $this->y, 'UTF-8' );
-                $numpage++;
+                $collectedpage->drawText('Side ' . ($numpage+1) . ' af ' . (($shipmentendpage-$shipmentstartpage)+1), $this->_rightstop, $this->y, 'UTF-8' );
             }
 
             if ($shipment->getStoreId()) {
@@ -191,6 +192,7 @@ class Digidennis_Sitedesign_Model_Order_Pdf_Shipment extends Digidennis_Sitedesi
         $page->setFillColor(new Zend_Pdf_Color_GrayScale(0));
         $this->y -= 20;
     }
+
     public function newPage(array $settings = array())
     {
         /* Add new table head */

@@ -91,7 +91,11 @@ class Digidennis_Sitedesign_Model_Order_Pdf_Invoice extends Digidennis_Sitedesig
                 $collectedpage->drawText('Fakturadato: '  . Mage::helper('core')->formatDate($invoice->getCreatedAt(), 'long', false), $this->_rightstop, 600-12, 'UTF-8');
                 $collectedpage->drawText('Ordre: ' . $order->getIncrementId(), $this->_rightstop, 600-24, 'UTF-8');
                 $collectedpage->drawText('Side ' . $numpage . ' af ' . $pagecount, $this->_rightstop, 600-36, 'UTF-8' );
-                $this->_renderPaymentInfo($payment, $collectedpage);
+                if( $order->getPayment()->getMethod() == 'digidennis_bankfaktura'){
+                    $this->_renderBankPaymentInfo($order->getPayment(), $collectedpage);
+                } else {
+                    $this->_renderPaymentInfo($payment, $collectedpage);
+                }
                 $numpage++;
             }
 
@@ -118,6 +122,35 @@ class Digidennis_Sitedesign_Model_Order_Pdf_Invoice extends Digidennis_Sitedesig
                 }
             }
         }
+    }
+    protected function _renderBankPaymentInfo( $paymentInfo, $page)
+    {
+        $this->y = 80;
+        $page->setFillColor(new Zend_Pdf_Color_GrayScale(0.9));
+        $page->drawLine($this->_leftstop, $this->y+14, 550, $this->y+14 );
+        $page->setFillColor(new Zend_Pdf_Color_GrayScale(0));
+        $data = $paymentInfo->getAdditionalInformation();
+        $helper = Mage::helper('digidennis_sitedesign');
+
+        $page->drawText($helper->__('Betalingsbetingelser'), $this->_leftstop, $this->y, 'UTF-8' );
+        $page->drawText($helper->__('Anfør venligst fakturanummer ved indbetaling'), $this->_rightstop-150, $this->y, 'UTF-8' );
+        $page->drawText($data['terms'], $this->_leftstop+100, $this->y, 'UTF-8' );
+
+        $page->drawText($helper->__('Forfaldsdato'), $this->_leftstop, $this->y-=14, 'UTF-8' );
+        $this->_setFontBold($page, 9);
+        $page->drawText($data['maturitydate'], $this->_leftstop+100, $this->y, 'UTF-8' );
+        $this->_setFontRegular($page, 9);
+
+        $page->drawText($helper->__('Bank'), $this->_leftstop, $this->y-=14, 'UTF-8' );
+        $page->drawText($data['bankname'], $this->_leftstop+100, $this->y, 'UTF-8' );
+
+        $page->drawText($helper->__('Reg Nr'), $this->_leftstop, $this->y-=14, 'UTF-8' );
+        $page->drawText($data['bankid'], $this->_leftstop+100, $this->y, 'UTF-8' );
+
+        $page->drawText($helper->__('Konto'), $this->_leftstop, $this->y-=14, 'UTF-8' );
+        $page->drawText($data['accountid'], $this->_leftstop+100, $this->y, 'UTF-8' );
+
+
     }
     /**
      * Insert totals to pdf page
