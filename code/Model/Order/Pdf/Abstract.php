@@ -11,6 +11,7 @@ abstract class Digidennis_Sitedesign_Model_Order_Pdf_Abstract extends Mage_Sales
 
     protected $_leftstop = 40;
     protected $_rightstop = 439.363;
+    protected $_pagebreak = 80;
     /**
      * Set font as regular
      */
@@ -64,7 +65,7 @@ abstract class Digidennis_Sitedesign_Model_Order_Pdf_Abstract extends Mage_Sales
      * @throws Mage_Core_Exception
      * @return Zend_Pdf_Page
      */
-    public function drawLineBlocks(Zend_Pdf_Page $page, array $draw, array $pageSettings = array())
+    public function drawLineBlocks(Zend_Pdf_Page $page, array $draw, array $pageSettings = array() )
     {
         foreach ($draw as $itemsProp) {
             if (!isset($itemsProp['lines']) || !is_array($itemsProp['lines'])) {
@@ -94,7 +95,7 @@ abstract class Digidennis_Sitedesign_Model_Order_Pdf_Abstract extends Mage_Sales
                 $itemsProp['shift'] = $shift;
             }
 
-            if ($this->y - $itemsProp['shift'] < 80) {
+            if ($this->y - $itemsProp['shift'] < $this->_pagebreak) {
                 $page = $this->newPage($pageSettings);
             }
 
@@ -127,7 +128,7 @@ abstract class Digidennis_Sitedesign_Model_Order_Pdf_Abstract extends Mage_Sales
                     $lineSpacing = !empty($column['height']) ? $column['height'] : $height;
                     $top = 0;
                     foreach ($column['text'] as $part) {
-                        if ($this->y - $lineSpacing < 80 ) {
+                        if ($this->y - $lineSpacing < $this->_pagebreak ) {
                             $page = $this->newPage($pageSettings);
                         }
 

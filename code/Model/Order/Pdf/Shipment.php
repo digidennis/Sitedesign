@@ -86,7 +86,7 @@ class Digidennis_Sitedesign_Model_Order_Pdf_Shipment extends Digidennis_Sitedesi
             foreach ($billingAddress as $value){
                 if ($value !== '') {
                     $text = array();
-                    foreach (Mage::helper('core/string')->str_split($value, 160, true, true) as $_value) {
+                    foreach (Mage::helper('core/string')->str_split($value, 140, true, true) as $_value) {
                         $text[] = $_value;
                     }
                     foreach ($text as $part) {
@@ -101,9 +101,15 @@ class Digidennis_Sitedesign_Model_Order_Pdf_Shipment extends Digidennis_Sitedesi
                 'UTF-8'
             );
 
+            $this->y = 200;
+            $didrender = $this->_renderOrderComments($order, $page);
             //draw invoiced items, may span pages
             $this->y = 600;
             $this->_drawHeader($page);
+
+            if( $didrender)
+                $this->_pagebreak = 250;
+
             foreach ($shipment->getAllItems() as $item){
                 if ($item->getOrderItem()->getParentItem()) {
                     continue;
@@ -204,5 +210,30 @@ class Digidennis_Sitedesign_Model_Order_Pdf_Shipment extends Digidennis_Sitedesi
             $this->_drawHeader($page);
         }
         return $page;
+    }
+
+    protected function _renderOrderComments( Mage_Sales_Model_Order $order, Zend_Pdf_Page $page)
+    {
+        $histories = $order->getVisibleStatusHistory ();
+        $lines = array();
+        foreach ($histories as $history){
+            foreach (Mage::helper('core/string')->str_split($history->getComment(), 130, true, true) as $_value) {
+                if( $_value )
+                    $lines[] = $_value;
+            }
+            $lines[] = '---';
+        }
+        if(count($lines)){
+            $this->_setFontBold($page,11);
+            $page->drawText(Mage::helper('digidennis_sitedesign')->__('Kommentar til bestilling'), $this->_leftstop, $this->y, 'UTF-8');
+            $this->y -= 18;
+            $this->_setFontRegular($page,9);
+            $counter = 0;
+            foreach ($lines as $line){
+                $page->drawText($line, $this->_leftstop, $this->y-=12 , 'UTF-8' );
+            }
+            return true;
+        }
+        return false;
     }
 }
