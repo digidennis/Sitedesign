@@ -155,6 +155,19 @@ class Digidennis_Sitedesign_Model_Order_Pdf_Shipment extends Digidennis_Sitedesi
                 $collectedpage->drawText('Side ' . ($numpage+1) . ' af ' . (($shipmentendpage-$shipmentstartpage)+1), $this->_rightstop, $this->y, 'UTF-8' );
             }
 
+            //orderattachments
+            $orderattachment = Mage::getModel('digidennis_orderattachment/orderattachment')->load($order->getId(), 'order_id');
+            if( $orderattachment->getOrderattachmentId() ) {
+                $mediafiles = unserialize($orderattachment->getDatablob());
+                $path = Mage::getBaseDir('media') . DS . 'uploads' . DS;
+                foreach ($mediafiles as $mediafile ){
+                    $mimetype = mime_content_type($path . $mediafile['path'] );
+                    $this->_insertImageMedia($path . $mediafile['path'] );
+
+                }
+            }
+
+
             if ($shipment->getStoreId()) {
                 Mage::app()->getLocale()->revert();
             }
@@ -235,5 +248,25 @@ class Digidennis_Sitedesign_Model_Order_Pdf_Shipment extends Digidennis_Sitedesi
             return true;
         }
         return false;
+    }
+
+    protected  function _insertImageMedia($file )
+    {
+        $newpage = new Zend_Pdf_Page( Zend_Pdf_Page::SIZE_A4_LANDSCAPE);
+        $image = Zend_Pdf_Image::imageWithPath($file);
+        $widthscale = 822.0 / $image->getPixelWidth();
+        $heightscale = 575.0 / $image->getPixelHeight();
+        if($widthscale < $heightscale){
+            $newwidth = $image->getPixelWidth() * $widthscale;
+            $newheight = $image->getPixelHeight() * $widthscale;
+            $offsety = (575 - $newheight)/2;
+            $newpage->drawImage($image, 10, 10+$offsety, $newwidth+10, $newheight+$offsety+10);
+        } else {
+            $newwidth = $image->getPixelWidth() * $heightscale;
+            $newheight = $image->getPixelHeight() * $heightscale;
+            $offsetx = (822 - $newwidth)/2;
+            $newpage->drawImage($image, 10+$offsetx, 10, $newwidth+10+$offsetx, $newheight+10);
+        }
+        $this->_getPdf()->pages[] = $newpage;
     }
 }
