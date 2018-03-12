@@ -58,7 +58,7 @@ class Digidennis_Sitedesign_Model_Order_Pdf_Shipment extends Digidennis_Sitedesi
             $order = $shipment->getOrder();
             $shipmentstartpage = count($this->_getPdf()->pages);
 
-            //modtager
+            //SHIP TO
             $shippingAddress = $this->_formatAddress($order->getShippingAddress()->format('pdf'));
             $this->y = 730;
             $this->_setFontBold($page, 10);
@@ -77,7 +77,7 @@ class Digidennis_Sitedesign_Model_Order_Pdf_Shipment extends Digidennis_Sitedesi
                 }
             }
 
-            //betaler
+            //INVOICE TO
             $billingAddress = $this->_formatAddress($order->getBillingAddress()->format('pdf'));
             $this->y = 730;
             $this->_setFontBold($page, 10);
@@ -101,15 +101,15 @@ class Digidennis_Sitedesign_Model_Order_Pdf_Shipment extends Digidennis_Sitedesi
                 'UTF-8'
             );
 
-            $this->y = 200;
+            //COMMENTS
             $didrender = $this->_renderOrderComments($order, $page);
-            //draw invoiced items, may span pages
-            $this->y = 600;
-            $this->_drawHeader($page);
-
+            //if we have comments items pagebreak should be higher
             if( $didrender)
                 $this->_pagebreak = 250;
 
+            $this->y = 600;
+            $this->_drawHeader($page);
+            //draw invoiced items, may span pages
             foreach ($shipment->getAllItems() as $item){
                 if ($item->getOrderItem()->getParentItem()) {
                     continue;
@@ -126,7 +126,7 @@ class Digidennis_Sitedesign_Model_Order_Pdf_Shipment extends Digidennis_Sitedesi
             //on all pages of this shipment this info
             $shipmentendpage = count($this->_getPdf()->pages);
 
-            for( $numpage = 0; $numpage + $shipmentstartpage <= $shipmentendpage; $numpage++){
+            for( $numpage = $shipmentstartpage-1; $numpage < $shipmentendpage; $numpage++){
                 $collectedpage = $this->_getPdf()->pages[$numpage];
 
                 //CARRIER METHOD
@@ -151,8 +151,8 @@ class Digidennis_Sitedesign_Model_Order_Pdf_Shipment extends Digidennis_Sitedesi
                 //Ordrenr, dato, ordrenr
                 $this->_setFontRegular($collectedpage, 9);
                 $collectedpage->drawText('Ordre: ' . $order->getIncrementId(), $this->_rightstop, $this->y+24, 'UTF-8');
-                $collectedpage->drawText('Ordredato: '  . Mage::helper('core')->formatDate($shipment->getCreatedAt(), 'long', false), $this->_rightstop, $this->y+12, 'UTF-8');
-                $collectedpage->drawText('Side ' . ($numpage+1) . ' af ' . (($shipmentendpage-$shipmentstartpage)+1), $this->_rightstop, $this->y, 'UTF-8' );
+                $collectedpage->drawText('Ordredato: '  . Mage::helper('core')->formatDate($order->getCreatedAt() , 'long', false), $this->_rightstop, $this->y+12, 'UTF-8');
+                $collectedpage->drawText('Side ' . ($numpage-$shipmentstartpage+2) . ' af ' . (($shipmentendpage-$shipmentstartpage)+1), $this->_rightstop, $this->y, 'UTF-8' );
             }
 
             //orderattachments
@@ -227,6 +227,7 @@ class Digidennis_Sitedesign_Model_Order_Pdf_Shipment extends Digidennis_Sitedesi
 
     protected function _renderOrderComments( Mage_Sales_Model_Order $order, Zend_Pdf_Page $page)
     {
+        $this->y = 200;
         $histories = $order->getVisibleStatusHistory ();
         $lines = array();
         foreach ($histories as $history){
