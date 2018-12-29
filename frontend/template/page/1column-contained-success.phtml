@@ -17,6 +17,14 @@
             'transaction_id': '<?php echo $_orderid; ?>'
         });
     </script>
+    <script>
+        window.uetq = window.uetq || [];
+        window.uetq.push ('event', 'success', { event_category: 'sales',
+                                                event_label: 'shop',
+                                                event_value: '<?php echo $_orderid; ?>',
+                                                revenue_value: <?php echo $_amount; ?>,
+                                                'currency': 'DKK'});
+    </script>
 </head>
 
 <body<?php echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?>>
