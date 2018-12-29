@@ -36,7 +36,7 @@ class Digidennis_Sitedesign_Model_Order_Pdf_Shipment extends Digidennis_Sitedesi
     /**
      * Return PDF document
      *
-     * @param  array $invoices
+     * @param  array $shipments
      * @return Zend_Pdf
      * @throws Zend_Pdf_Exception
      */
